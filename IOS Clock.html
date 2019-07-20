@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        *{margin: 0;padding: 0}
+        li{list-style: none}
+        .clock{width: 240px;height: 240px;background: #000;margin: 100px auto;border-radius: 30px;position: relative;}
+        .dial{width: 200px;height: 200px;background: #fff;border-radius: 50%;position:absolute;top: 20px;left: 20px;}
+        li{position: absolute;left: 50%;top: 0;margin-left: -15px;transform-origin: 15px 100px}
+        
+        li span{display: inline-block;width: 30px;height: auto; text-align:center;color: #000;font-size: 20px;font-weight: 600;font-family: Microsoft Yahei;}
+        .dot{width: 10px;height: 10px;border-radius: 50%;background: #000;position: absolute;top: 50%;left: 50%;margin-left: -5px;margin-top: -5px;}
+        .hour{width: 4px;height: 70px;background: #000;position: absolute;left: 50%;margin-left: -2px;top:50px;transform-origin: center bottom;border-radius: 4px }
+        .min{width: 4px;height: 90px;background: #000;position: absolute;
+        left: 50%;margin-left: -2px;top: 30px;transform-origin: center bottom;border-radius: 4px  }
+        .sec{width: 2px;height: 100px;background:orangered;position: absolute;
+        left: 50%;margin-left: -1px;top: 30px;transform-origin: center 90px; }
+    </style>
+</head>
+<body>
+    <div class="clock">
+        <ul class="dial">  
+        </ul>
+        <div class="dot"></div>
+        <div class="hour"></div>
+        <div class="min"></div>
+        <div class="sec"></div>
+    </div>
+    <script>
+       
+        var oDial = document.getElementsByClassName('dial')[0];
+        var oSecond = document.getElementsByClassName('sec')[0];
+        var oMin  = document.getElementsByClassName('min')[0];
+        var oHour  = document.getElementsByClassName('hour')[0];
+        var total = 12;
+
+        function init(){
+            var str = "";
+            for(i = 1; i <= total; i++) {
+            str += '<li style="transform:rotate('+i*30+'deg)">\
+            <span style="transform:rotate('+(-i)*30+'deg)">'+ i +'</span>\
+            </li>';
+         }  
+         oDial.innerHTML = str;
+         time();
+        }
+         init();
+
+    function time(){
+         var date = new Date();
+
+         var sec  = date.getSeconds();
+         var msec = date.getMilliseconds();
+         var fullSec = sec + msec / 1000;
+         oSecond.style.transform = 'rotate('+ fullSec * 6 +'deg)';
+
+         var min  = date.getMinutes();
+         var fullMin = min + fullSec/60;   
+         oMin.style.transform = 'rotate('+ fullMin * 6+ 'deg)';
+
+         var hour = date.getHours();
+         var fullHour = hour + fullMin/60;
+         oHour.style.transform = 'rotate('+ fullHour * 30+ 'deg)';
+
+        //  setTimeout(time, 1000/60);
+    }
+       
+setInterval(time)
+
+
+    </script>
+</body>
+</html>
